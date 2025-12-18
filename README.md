@@ -1,2 +1,1 @@
-Selam
-Naber
+selam değişti
