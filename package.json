@@ -1,0 +1,16 @@
+{
+  "name": "ai-code-review-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AI-powered code review bot",
+  "main": "ai_review.js",
+  "scripts": {
+    "review": "node ai_review.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
