@@ -1,0 +1,92 @@
+# Unity generated folders
+Library/
+Temp/
+Builds/
+Build/
+builds/
+build/
+obj/
+Obj/
+Logs/
+UserSettings/
+MemoryCaptures/
+Recordings/
+
+# IDE folders
+.vs/
+.vscode/
+.idea/
+
+# Unity project files (generated)
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+
+# Large binary assets - images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.psd
+*.ai
+*.tga
+*.bmp
+*.exr
+*.tif
+*.tiff
+
+# Large binary assets - 3D models
+*.fbx
+*.obj
+*.max
+*.blend
+*.dae
+*.3ds
+
+# Large binary assets - audio
+*.mp3
+*.wav
+*.ogg
+*.aif
+*.aiff
+*.mod
+*.it
+*.s3m
+*.xm
+
+# Large binary assets - video
+*.mp4
+*.mov
+*.avi
+*.asf
+*.mpg
+*.mpeg
+*.flv
+
+# Unity binary files
+*.asset
+*.cubemap
+*.flare
+*.mat
+*.prefab
+*.unity
+*.unitypackage
+
+# Font files
+*.ttf
+*.otf
+
+# Compiled files
+*.dll
+*.exe
+*.so
+*.dylib
+
+# Package manager
+[Pp]ackages/
+manifest.json.lock
