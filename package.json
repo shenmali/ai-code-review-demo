@@ -5,6 +5,7 @@
   "description": "AI-powered code review bot",
   "main": "ai_review.js",
   "scripts": {
+    "start": "node server.js",
     "review": "node ai_review.js"
   },
   "dependencies": {
