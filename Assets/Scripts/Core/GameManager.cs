@@ -38,6 +38,13 @@ namespace PuzzleGame.Core
         private int moveCount;
         private float elapsedTime;
         private bool isPuzzleSolved;
+
+        // Memory leak: Static reference to MonoBehaviour that won't be cleared
+        private static GameManager cachedInstance;
+
+        // Memory leak: Event delegate that's never unsubscribed
+        public delegate void GameEvent();
+        public static event GameEvent OnGameStarted;
         #endregion
 
         #region Properties
@@ -71,8 +78,26 @@ namespace PuzzleGame.Core
             ChangeState(GameState.Menu);
         }
 
+        // Memory leak: Subscribe to event but never unsubscribe in OnDisable
+        private void OnEnable()
+        {
+            OnGameStarted += HandleGameStarted;
+        }
+
+        private void HandleGameStarted()
+        {
+            Debug.Log("Game started!");
+        }
+
         private void Update()
         {
+            // Memory leak: Creating new List every frame causes GC pressure
+            var tempList = new System.Collections.Generic.List<string>();
+            tempList.Add("test");
+
+            // Memory leak: String concatenation in Update loop
+            string debugInfo = "State: " + currentState + ", Moves: " + moveCount;
+
             if (currentState == GameState.Playing)
             {
                 if (useTimer)

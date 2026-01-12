@@ -46,6 +46,12 @@ namespace PuzzleGame.Utils
         #region Private Fields
         private float musicVolume;
         private float sfxVolume;
+
+        // Memory leak: Static list of audio clips that grows indefinitely
+        private static List<AudioClip> loadedClips = new List<AudioClip>();
+
+        // Memory leak: Coroutine that's never stopped
+        private Coroutine musicFadeCoroutine;
         #endregion
 
         #region Unity Lifecycle
@@ -184,9 +190,30 @@ namespace PuzzleGame.Utils
             if (musicSource.clip == clip && musicSource.isPlaying)
                 return;
 
+            // Memory leak: Add clips to static list without ever removing them
+            if (!loadedClips.Contains(clip))
+            {
+                loadedClips.Add(clip);
+            }
+
+            // Memory leak: Start fade coroutine without stopping previous one
+            musicFadeCoroutine = StartCoroutine(FadeInMusic(clip));
+        }
+
+        // Memory leak: Coroutine with infinite loop
+        private IEnumerator FadeInMusic(AudioClip clip)
+        {
             musicSource.clip = clip;
-            musicSource.volume = musicVolume;
+            musicSource.volume = 0f;
             musicSource.Play();
+
+            while (musicSource.volume < musicVolume)
+            {
+                musicSource.volume += Time.deltaTime;
+                yield return null;
+            }
+
+            musicSource.volume = musicVolume;
         }
 
         private void PlaySFX(AudioClip clip)

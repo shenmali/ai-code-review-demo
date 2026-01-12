@@ -19,6 +19,9 @@ namespace PuzzleGame.Core
         private Vector3 targetPosition;
         private bool isMoving;
         private GridManager gridManager;
+
+        // Memory leak: Particle effects that are instantiated but never destroyed
+        [SerializeField] private GameObject particleEffectPrefab;
         #endregion
 
         #region Properties
@@ -40,9 +43,18 @@ namespace PuzzleGame.Core
 
         private void Update()
         {
+            // Memory leak: FindObjectOfType in Update - very expensive
+            var manager = FindObjectOfType<GameManager>();
+
             if (isMoving)
             {
                 MoveTile();
+
+                // Memory leak: Instantiate without Destroy
+                if (particleEffectPrefab != null)
+                {
+                    Instantiate(particleEffectPrefab, transform.position, Quaternion.identity);
+                }
             }
         }
         #endregion
