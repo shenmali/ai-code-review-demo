@@ -6,32 +6,44 @@ permissions:
   issues: write
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  push:
+    branches: 
+      - main
+      - develop
+      - 'feature/**'
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - 'docs/**'
 
 jobs:
   ai_review:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
-
+          fetch-depth: 2  # Son 2 commit'i al
+      
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-
+      
       - name: Install dependencies
         run: npm install
-
-      - name: Run AI review for each commit
+      
+      - name: Get commit diff
+        run: |
+          git diff HEAD~1 HEAD > diff.txt
+          echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+          echo "COMMIT_AUTHOR=$(git log -1 --pretty=%an)" >> $GITHUB_ENV
+      
+      - name: Run AI review
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: node ai_review.js
