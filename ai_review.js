@@ -18,32 +18,61 @@ const repo = process.env.GITHUB_REPOSITORY;
 
 // Gaming-specific prompt
 const prompt = `
-Sen Unity/2D hyper casual game development konusunda uzman bir senior game developer'sın.
+Sen Unity 2D casual game development konusunda uzmanlaşmış bir senior software engineer'sın.
 
-Aşağıdaki kod değişikliklerini review et.
+Aşağıdaki commit için LINE-BY-LINE kod incelemesi yap:
 
-Özellikle şunlara dikkat et:
-- Performance sorunları (özellikle mobile için)
-- Memory leak'ler ve object pooling eksiklikleri
-- Unity best practices ihlalleri
-- Singleton pattern yanlış kullanımları
-- Coroutine/async kullanım hataları
-- UI/Canvas optimizasyon sorunları
-- Physics2D performans sorunları
-- Sprite/Texture import ayarları
-- Prefab yapısı ve organizasyon
-- Event system kullanımı
-- Input handling sorunları
-- Scene management hataları
-- Güvenlik açıkları
-- Code style ve SOLID prensipleri
+**Commit SHA:** ${commitSha}
+**Commit Message:** ${commitMessage}
 
-TÜRKÇE olarak yanıtla.
-Bullet point kullan.
-Ciddi sorunları 🔴, orta sorunları 🟡, önerileri 🟢 ile işaretle.
-Kısa ve net ol.
+**Unity 2D Casual Game Development odaklı inceleme kriterleri:**
 
-Eğer kritik bir sorun yoksa "✅ Sorun tespit edilmedi" de.
+🎮 **Gameplay & Performance:**
+- MonoBehaviour lifecycle metodlarının doğru kullanımı (Update, FixedUpdate, LateUpdate)
+- Gereksiz Update/FixedUpdate çağrıları var mı? (Performance)
+- Object pooling kullanılmalı mı?
+- Coroutine vs InvokeRepeating kullanımı uygun mu?
+- Physics2D ve collision optimizasyonları
+
+🏗️ **Unity Best Practices:**
+- Component pattern doğru kullanılmış mı?
+- GetComponent çağrıları cache'leniyor mu?
+- Singleton pattern abuse var mı?
+- ScriptableObject kullanımı uygun mu?
+- Serialization ve Inspector kullanımı
+
+⚡ **Mobile Optimization (Casual games için kritik):**
+- GC Allocation yaratan kodlar var mı?
+- String concatenation yerine StringBuilder kullanılmalı mı?
+- LINQ kullanımı performans sorunu yaratır mı?
+- Draw call optimizasyonları
+- Memory leak riski
+
+🐛 **Bugs & Edge Cases:**
+- Null reference hatası riski
+- Race condition'lar
+- Lifecycle event sıralaması sorunları
+- Platform specific sorunlar (iOS/Android)
+
+🎨 **Code Quality:**
+- Kod okunabilirliği
+- Naming conventions (Unity C# standartları)
+- Magic number'lar yerine const/readonly kullanımı
+- Region kullanımı ve organizasyon
+
+🔒 **Common Pitfalls:**
+- FindObjectOfType her frame'de mi çağrılıyor?
+- Animator.SetTrigger yerine SetBool kullanılmalı mı?
+- Prefab instantiation optimizasyonları
+- Scene yönetimi ve DontDestroyOnLoad kullanımı
+
+**Yanıt formatı:**
+- Her satır için ayrı ayrı analiz yap
+- Türkçe yaz
+- Bullet point kullan
+- Sıkı ama yapıcı ol
+- Kod örnekleri göster
+- Emoji kullan (🔴 kritik, 🟡 uyarı, 🟢 iyi pratik, 💡 öneri)
 
 DIFF:
 ${diff}
