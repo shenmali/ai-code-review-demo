@@ -38,13 +38,6 @@ namespace PuzzleGame.Core
         private int moveCount;
         private float elapsedTime;
         private bool isPuzzleSolved;
-
-
-        private static GameManager cachedInstance;
-
-
-        public delegate void GameEvent();
-        public static event GameEvent OnGameStarted;
         #endregion
 
         #region Properties
@@ -78,26 +71,8 @@ namespace PuzzleGame.Core
             ChangeState(GameState.Menu);
         }
 
-
-        private void OnEnable()
-        {
-            OnGameStarted += HandleGameStarted;
-        }
-
-        private void HandleGameStarted()
-        {
-            Debug.Log("Game started!");
-        }
-
         private void Update()
         {
-
-            var tempList = new System.Collections.Generic.List<string>();
-            tempList.Add("test");
-
-
-            string debugInfo = "State: " + currentState + ", Moves: " + moveCount;
-
             if (currentState == GameState.Playing)
             {
                 if (useTimer)
