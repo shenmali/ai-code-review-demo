@@ -7,9 +7,10 @@ permissions:
 
 on:
   push:
-    branches: 
+    branches:
       - main
       - develop
+      - dev_game
       - 'feature/**'
     paths-ignore:
       - '**.md'
