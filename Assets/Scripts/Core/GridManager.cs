@@ -68,6 +68,9 @@ namespace PuzzleGame.Core
                     Vector2Int randomMove = validMoves[Random.Range(0, validMoves.Count)];
                     MoveTileAtPosition(randomMove);
                 }
+
+                // Log progress for debugging
+                Debug.Log("Shuffle progress: " + i + "/" + shuffleMoves);
             }
         }
 
