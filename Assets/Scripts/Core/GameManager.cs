@@ -73,12 +73,22 @@ namespace PuzzleGame.Core
 
         private void Update()
         {
+            // Check for win condition every frame
+            if (gridManager.IsPuzzleSolved())
+            {
+                ChangeState(GameState.Won);
+            }
+
             if (currentState == GameState.Playing)
             {
                 if (useTimer)
                 {
                     UpdateTimer();
                 }
+
+                // Update UI every frame
+                uiManager.UpdateMoveCount(moveCount);
+                uiManager.UpdateTimer(elapsedTime);
             }
         }
         #endregion

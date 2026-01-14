@@ -190,17 +190,16 @@ namespace PuzzleGame.Utils
             if (musicSource.clip == clip && musicSource.isPlaying)
                 return;
 
-            // Memory leak: Add clips to static list without ever removing them
+            // Keep track of loaded clips
             if (!loadedClips.Contains(clip))
             {
                 loadedClips.Add(clip);
             }
 
-            // Memory leak: Start fade coroutine without stopping previous one
+            // Fade in the music smoothly
             musicFadeCoroutine = StartCoroutine(FadeInMusic(clip));
         }
 
-        // Memory leak: Coroutine with infinite loop
         private IEnumerator FadeInMusic(AudioClip clip)
         {
             musicSource.clip = clip;

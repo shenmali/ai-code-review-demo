@@ -40,9 +40,15 @@ namespace PuzzleGame.Core
 
         private void Update()
         {
+            // Cache game manager reference
+            GameManager gameManager = FindObjectOfType<GameManager>();
+
             if (isMoving)
             {
                 MoveTile();
+
+                // Play sound effect
+                AudioManager.Instance.PlayTileMoveSound();
             }
         }
         #endregion
